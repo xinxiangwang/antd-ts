@@ -3,7 +3,20 @@ import { Layout, Menu, Icon, Dropdown, Avatar, Badge } from 'antd'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import './Frame.scss'
 import { adminRouter } from '../../routes'
+import { MapDispatchToPropsParam, connect as ConnectRedux } from 'react-redux'
+import { Message } from '../../reducers/notifications'
 const { Header, Sider, Content } = Layout
+
+function connect<TDispatchProps = {}, TOwnProps = any>(
+  mapStateToProps?: ( ownProps?: TOwnProps) => any,
+  mapDispatchToProps?: MapDispatchToPropsParam<TDispatchProps, TOwnProps>
+): any {
+  return ConnectRedux(mapStateToProps, mapDispatchToProps);
+}
+
+interface IProps extends RouteComponentProps {
+  notificationCount?: string
+}
 
 interface ClickParam { // 从antd源码中拿的
   key: string;
@@ -12,7 +25,15 @@ interface ClickParam { // 从antd源码中拿的
   domEvent: Event;
 }
 
-class Frame extends Component<RouteComponentProps, any> {
+const mapState = state => {
+  console.log(state)
+  return {
+    notificationCount: state.notifications.list.filter((item: Message) => !item.isRead).length
+  }
+}
+
+@connect(mapState)
+class Frame extends Component<IProps> {
   state = {
     collapsed: false
   }
@@ -31,7 +52,7 @@ class Frame extends Component<RouteComponentProps, any> {
     const menu = (
       <Menu onClick={this.handlePerMenuClick}>
         <Menu.Item key={'/admin/notifications'}>
-          <Badge dot={true}>
+          <Badge dot={Boolean(this.props.notificationCount)}>
             通知中心
           </Badge>
         </Menu.Item>
@@ -45,7 +66,6 @@ class Frame extends Component<RouteComponentProps, any> {
     )
     const selectedKeyArr = this.props.location.pathname.split('/')
     selectedKeyArr.length = 3
-    console.log(this.props)
     return (
       <Layout>
         <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
@@ -75,7 +95,7 @@ class Frame extends Component<RouteComponentProps, any> {
                 
                 <Avatar style={{ backgroundColor: '#87d068' }} icon="user" />&emsp;欢迎回来！王新翔
                 <Icon type="down" />
-                <Badge count={25} offset={[-30, -30]}/>
+                <Badge count={this.props.notificationCount} offset={[-30, -30]}/>
               </div>
             </Dropdown>
           </Header>
