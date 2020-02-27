@@ -50,3 +50,7 @@ export const editArticle = (id: string, params: editParams) => {
 export const pullArticleAmount = () => {
   return service.post('/example/articleAmount')
 }
+
+export const pullNotificationList = () => {
+  return service.post('/example/notifications')
+}

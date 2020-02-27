@@ -5,6 +5,7 @@ import './Frame.scss'
 import { adminRouter } from '../../routes'
 import { MapDispatchToPropsParam, connect as ConnectRedux } from 'react-redux'
 import { Message } from '../../reducers/notifications'
+import { setNotificationList } from '../../actions/notifications'
 const { Header, Sider, Content } = Layout
 
 function connect<TDispatchProps = {}, TOwnProps = any>(
@@ -16,6 +17,7 @@ function connect<TDispatchProps = {}, TOwnProps = any>(
 
 interface IProps extends RouteComponentProps {
   notificationCount?: string
+  setNotificationList: any
 }
 
 interface ClickParam { // 从antd源码中拿的
@@ -32,7 +34,7 @@ const mapState = state => {
   }
 }
 
-@connect(mapState)
+@connect(mapState, { setNotificationList })
 class Frame extends Component<IProps> {
   state = {
     collapsed: false
@@ -47,6 +49,9 @@ class Frame extends Component<IProps> {
   }
   handlePerMenuClick = ({ key }:ClickParam):void => {
     this.props.history.push(key)
+  }
+  componentDidMount () {
+    this.props.setNotificationList()
   }
   render() {
     const menu = (
