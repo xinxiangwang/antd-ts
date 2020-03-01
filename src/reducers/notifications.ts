@@ -16,6 +16,10 @@ const initState = {
     }
   ]
 }
+export interface notificationsState {
+  isLoading: boolean
+  list: Array<Message>
+}
 export interface Message {
   id: number,
   title: string,

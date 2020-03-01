@@ -31,7 +31,6 @@ export default class Dashboard extends Component<any, any> {
             type: 'line'
         }]
       }
-      console.log(option)
       this.articleChart = echarts.init(this.articleAmountDom.current)
       this.articleChart.setOption(option)
     })

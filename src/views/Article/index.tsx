@@ -91,7 +91,6 @@ export default class ArticleList extends Component<any, any> {
     })
   }
   toEdit = (record: object) => {
-    console.log(this.props)
     this.props.history.push({
       pathname: `/admin/article/edit/${record['id']}`,
       state: {
@@ -106,7 +105,6 @@ export default class ArticleList extends Component<any, any> {
         head.push(item.key)
       }
     })
-    console.log(head)
     let body: any[] = []
     for (let i = 0; i < this.state.dataSource.length; i++) {
       const element = this.state.dataSource[i]

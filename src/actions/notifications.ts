@@ -43,7 +43,6 @@ export const setNotificationList = () => {
   return async dispatch => {
     dispatch(startRead())
     let ret = await pullNotificationList()
-    console.log(ret)
     dispatch({
       type: actionTypes.PULL_NOTIFICATION_LIST,
       payload: {

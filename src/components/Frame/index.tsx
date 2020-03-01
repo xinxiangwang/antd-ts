@@ -3,21 +3,26 @@ import { Layout, Menu, Icon, Dropdown, Avatar, Badge } from 'antd'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import './Frame.scss'
 import { adminRouter } from '../../routes'
-import { MapDispatchToPropsParam, connect as ConnectRedux } from 'react-redux'
+import { connect } from '../../common'
+// import { MapDispatchToPropsParam, connect as ConnectRedux } from 'react-redux'
 import { Message } from '../../reducers/notifications'
 import { setNotificationList } from '../../actions/notifications'
+import { userLogout } from '../../actions/user'
 const { Header, Sider, Content } = Layout
 
-function connect<TDispatchProps = {}, TOwnProps = any>(
-  mapStateToProps?: ( ownProps?: TOwnProps) => any,
-  mapDispatchToProps?: MapDispatchToPropsParam<TDispatchProps, TOwnProps>
-): any {
-  return ConnectRedux(mapStateToProps, mapDispatchToProps);
-}
+// function connect<TDispatchProps = {}, TOwnProps = any>(
+//   mapStateToProps?: ( ownProps?: TOwnProps) => any,
+//   mapDispatchToProps?: MapDispatchToPropsParam<TDispatchProps, TOwnProps>
+// ): any {
+//   return ConnectRedux(mapStateToProps, mapDispatchToProps);
+// }
 
 interface IProps extends RouteComponentProps {
   notificationCount?: string
-  setNotificationList: any
+  setNotificationList?: any,
+  avatar?: string,
+  name?: string,
+  userLogout?: any
 }
 
 interface ClickParam { // 从antd源码中拿的
@@ -28,13 +33,15 @@ interface ClickParam { // 从antd源码中拿的
 }
 
 const mapState = state => {
-  console.log(state)
+  console.log(state.user)
   return {
-    notificationCount: state.notifications.list.filter((item: Message) => !item.isRead).length
+    notificationCount: state.notifications.list.filter((item: Message) => !item.isRead).length,
+    avatar: state.user.avatar,
+    name: state.user.name
   }
 }
 
-@connect(mapState, { setNotificationList })
+@connect(mapState, { setNotificationList, userLogout })
 class Frame extends Component<IProps> {
   state = {
     collapsed: false
@@ -48,7 +55,11 @@ class Frame extends Component<IProps> {
     this.props.history.push(key)
   }
   handlePerMenuClick = ({ key }:ClickParam):void => {
-    this.props.history.push(key)
+    if (key === '/login') {
+      this.props.userLogout()
+    } else {
+      this.props.history.push(key)
+    }
   }
   componentDidMount () {
     this.props.setNotificationList()
@@ -98,7 +109,7 @@ class Frame extends Component<IProps> {
             
               <div style={{display: 'flex', alignItems: 'center'}}>
                 
-                <Avatar style={{ backgroundColor: '#87d068' }} icon="user" />&emsp;欢迎回来！王新翔
+                <Avatar src={this.props.avatar}/>&emsp;欢迎回来！{this.props.name}
                 <Icon type="down" />
                 <Badge count={this.props.notificationCount} offset={[-30, -30]}/>
               </div>

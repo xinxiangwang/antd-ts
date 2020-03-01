@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
 import { Card, Button, List, Avatar, Badge, Spin } from 'antd'
-import { MapDispatchToPropsParam, connect as ConnectRedux } from 'react-redux'
+import { connect } from '../../common'
+// import { MapDispatchToPropsParam, connect as ConnectRedux } from 'react-redux'
 import { Message } from '../../reducers/notifications'
 import { NotificationReaded, AllReaded } from '../../actions/notifications'
 
-function connect<TDispatchProps = {}, TOwnProps = any>(
-  mapStateToProps?: ( ownProps?: TOwnProps) => any,
-  mapDispatchToProps?: MapDispatchToPropsParam<TDispatchProps, TOwnProps>
-): any {
-  return ConnectRedux(mapStateToProps, mapDispatchToProps);
-}
+// function connect<TDispatchProps = {}, TOwnProps = any>(
+//   mapStateToProps?: ( ownProps?: TOwnProps) => any,
+//   mapDispatchToProps?: MapDispatchToPropsParam<TDispatchProps, TOwnProps>
+// ): any {
+//   return ConnectRedux(mapStateToProps, mapDispatchToProps);
+// }
 
 interface IProps {
   list: Array<Message>,
@@ -29,7 +30,6 @@ const mapState = state => {
 @connect(mapState, { NotificationReaded, AllReaded })
 class index extends Component<IProps> {
   render() {
-    console.log(this.props)
     return (
       <Spin spinning={this.props.isLoading}>
         <Card title="通知中心" bordered={false} extra={

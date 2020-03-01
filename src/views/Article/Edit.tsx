@@ -4,15 +4,23 @@ import E from 'wangeditor'
 import './index.scss'
 import { getArticle, editArticle } from '../../requests'
 import moment from 'moment'
+import { FormComponentProps } from 'antd/lib/form'
+import { RouteComponentProps} from 'react-router-dom'
 
-class ArticleEdit extends Component<any, any> {
+interface params {
+  id: string
+}
+interface Istates {
+  isSpinning: boolean
+}
+class ArticleEdit extends Component<FormComponentProps & RouteComponentProps<params>, Istates> {
   public editorRef: RefObject<HTMLDivElement>
   protected editor
   readonly formItemLayout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 12 },
   }
-  constructor (props: any, state: any) {
+  constructor (props: any) {
     super(props)
     this.editorRef = createRef()
     this.state = {

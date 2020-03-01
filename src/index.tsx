@@ -9,14 +9,17 @@ import zhCN from 'antd/es/locale/zh_CN'
 import { ConfigProvider } from 'antd'
 import store from './store'
 import { Provider } from 'react-redux'
+
 ReactDOM.render(
+  
   <Provider store={store}>
     <ConfigProvider locale={zhCN}>
       <Router>
         <Switch>
-          <Route path="/admin" render={(routerProps) => { // 要做权限验证，所以要使用render
+          {/* <Route path="/admin" render={(routerProps) => { // 要做权限验证，所以要使用render
             return <App {...routerProps}/> 
-          }}/>
+          }}/> */}
+          <Route path="/admin" component={App}/>
           {
             mainRouter.map(route => {
               return <Route key={route.pathname} path={route.pathname} component={route.component}/>

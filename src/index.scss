@@ -1,5 +1,13 @@
 $bgc: pink;
 body {
-  background-color: $bgc !important;
-  
+  background: url(./static/img/banner.jpg) 0 -80px no-repeat;
+  background-size: cover;
+  .login-wrapper {
+    width: 500px;
+    background-color: rgba(255, 255, 255, 0.9);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }

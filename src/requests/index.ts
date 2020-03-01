@@ -36,14 +36,20 @@ export const getArticle = (id: string) => { // 获取单个文章
 }
 
 
-interface editParams {
+interface editArticleParams {
   title: string,
   author: string,
   createTime: string,
   content: string,
   amount: number
 }
-export const editArticle = (id: string, params: editParams) => {
+
+interface loginParams {
+  username: string,
+  password: string,
+  remember?: boolean
+}
+export const editArticle = (id: string, params: editArticleParams) => {
   return service.post('/example/editArticle/' + id, { ...params })
 }
 
@@ -53,4 +59,8 @@ export const pullArticleAmount = () => {
 
 export const pullNotificationList = () => {
   return service.post('/example/notifications')
+}
+
+export const userLogin = (params: loginParams) => {
+  return service.post('/example/login', { ...params })
 }

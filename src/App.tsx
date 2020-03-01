@@ -1,9 +1,16 @@
 import React from 'react';
 import './App.css';
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import { adminRouter } from './routes/index'
 import Frame from './components/Frame'
+import { connect } from './common'
 
+const mapState = (state) => ({
+  isLogin: state.user.isLogin
+})
+interface Iprops {
+  isLogin?: boolean
+}
 // const testHOC = (WrappedComponent: any) => {
 //   return class HOC extends React.Component {
 //     render () {
@@ -18,10 +25,12 @@ import Frame from './components/Frame'
 // }
 
 // @testHOC
-class App extends React.Component {
+@connect(mapState)
+class App extends React.Component<Iprops> {
   render () {
+    console.log(this.props.isLogin)
     return (
-      <Frame>
+      this.props.isLogin ? <Frame>
         <div className="App">
           <Switch>
             {
@@ -39,7 +48,7 @@ class App extends React.Component {
             }
           </Switch>
         </div>
-      </Frame>
+      </Frame> : <Redirect to="/login"/>
     )
   }
 }
