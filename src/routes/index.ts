@@ -5,7 +5,8 @@ import {
   NotFound,
   Settings,
   Login,
-  Notifications
+  Notifications,
+  NoAuth
 } from '../views'
 
 interface RouteObj {
@@ -31,7 +32,8 @@ export const adminRouter = [
     pathname: '/admin/dashboard',
     component: Dashboard,
     label: '仪表盘',
-    isNav: true
+    isNav: true,
+    roles: ['001', '002', '003']
   },
   
   {
@@ -39,23 +41,33 @@ export const adminRouter = [
     component: ArticleList,
     exact: true,
     label: '文章',
-    isNav: true
+    isNav: true,
+    roles: ['001', '002']
   },
   {
     pathname: '/admin/article/edit/:id',
     component: ArticleEdit,
-    isNav: false
+    isNav: false,
+    roles: ['001']
   },
   {
     pathname: '/admin/settings',
     component: Settings,
     label: '设置',
-    isNav: true
+    isNav: true,
+    roles: ['001']
   },
   {
     pathname: '/admin/notifications',
     component: Notifications,
     label: '通知中心',
-    isNav: true
+    isNav: true,
+    roles: ['001', '002', '003']
   },
+  {
+    pathname: '/admin/noAuth',
+    component: NoAuth,
+    isNav: false,
+    roles: ['001', '002', '003']
+  }
 ]

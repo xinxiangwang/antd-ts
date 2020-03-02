@@ -33,7 +33,6 @@ interface ClickParam { // 从antd源码中拿的
 }
 
 const mapState = state => {
-  console.log(state.user)
   return {
     notificationCount: state.notifications.list.filter((item: Message) => !item.isRead).length,
     avatar: state.user.avatar,

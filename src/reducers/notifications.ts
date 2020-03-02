@@ -26,7 +26,7 @@ export interface Message {
   desc?: string,
   isRead: boolean
 }
-export default (state = initState, action) => {
+export default (state:notificationsState = initState, action) => {
   switch(action.type) {
 
     case actionTypes.NOTIFICATION_READED:

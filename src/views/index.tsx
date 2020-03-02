@@ -13,6 +13,7 @@ const NotFound = myLoadable(() => import('./NotFound'))
 const Settings = myLoadable(() => import('./Settings'))
 const Login = myLoadable(() => import('./Login'))
 const Notifications = myLoadable(() => import('./Notifications'))
+const NoAuth = myLoadable(() => import('./NoAuth'))
 
 export {
   Dashboard,
@@ -21,5 +22,6 @@ export {
   NotFound,
   Settings,
   Login,
-  Notifications
+  Notifications,
+  NoAuth
 }

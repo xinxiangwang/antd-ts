@@ -6,10 +6,12 @@ import Frame from './components/Frame'
 import { connect } from './common'
 
 const mapState = (state) => ({
-  isLogin: state.user.isLogin
+  isLogin: state.user.isLogin,
+  role: state.user.role
 })
 interface Iprops {
-  isLogin?: boolean
+  isLogin?: boolean,
+  role?: string
 }
 // const testHOC = (WrappedComponent: any) => {
 //   return class HOC extends React.Component {
@@ -28,7 +30,6 @@ interface Iprops {
 @connect(mapState)
 class App extends React.Component<Iprops> {
   render () {
-    console.log(this.props.isLogin)
     return (
       this.props.isLogin ? <Frame>
         <div className="App">
@@ -36,13 +37,14 @@ class App extends React.Component<Iprops> {
             {
               adminRouter.map(route => {
                 const Com = (route.component as React.ComponentClass) // 这次是不知道啥bug 断言一下就不报错了
+                const aaa = route.roles.includes(this.props.role)
                 return(
                   <Route
                     path={route.pathname}
                     key={route.pathname}
                     exact={(route as any).exact} //exact是可有可无的， 这里使用类型断言防止报错
                     render={(routerProps) => {
-                    return <Com {...routerProps}/>
+                    return aaa ? <Com {...routerProps}/> : <Redirect to="/admin/noAuth"/>
                 }}/>)
               })
             }

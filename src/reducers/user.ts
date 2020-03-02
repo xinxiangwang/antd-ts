@@ -12,8 +12,8 @@ export interface userState {
   name: string
   avatar: string
   role: string
-  isLogin: boolean,
-  isLoading: boolean,
+  isLogin: boolean
+  isLoading: boolean
 }
 
 export default (state: userState = initState, action) => {
@@ -34,7 +34,7 @@ export default (state: userState = initState, action) => {
       return {
         id: '',
         avatar: '',
-        roles: '',
+        role: '',
         name: '',
         token: '',
         isLogin: false,
