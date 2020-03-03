@@ -9,6 +9,13 @@ import zhCN from 'antd/es/locale/zh_CN'
 import { ConfigProvider } from 'antd'
 import store from './store'
 import { Provider } from 'react-redux'
+import { Map } from 'immutable'
+
+const state = { name: {0: 'asd'}, age: {0: 'kglhkdlf'} }
+const imState = Map(state)
+let newState = imState.set('age', { 0: '666' })
+console.log(imState.get('name') === newState.get('name')) // true  name对象没有改变 所以引用的原来的的值
+console.log(imState.get('age') === newState.get('age')) // false age改变了 newState中的age内存地址已经改变
 
 ReactDOM.render(
   

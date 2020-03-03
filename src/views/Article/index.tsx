@@ -61,6 +61,7 @@ export default class ArticleList extends Component<any, any> {
           <Button type="danger" size="small" onClick={() => this.delArticle(record)}>删除</Button>
         </Button.Group>
     })
+    if(!this['updater'].isMounted(this)) return // 防止组件销毁后的setState
     this.setState({
       dataSource: ret.data.data.list,
       columns,
@@ -123,6 +124,8 @@ export default class ArticleList extends Component<any, any> {
     XLSX.writeFile(wb, 'asdasd.xlsx')
   }
   componentDidMount () {
+    console.log(this['updater'].isMounted(this))
+    
     this.getTableData()
   }
   
